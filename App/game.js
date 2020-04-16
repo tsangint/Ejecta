@@ -37,7 +37,9 @@ if(typeof GameGlobal === "undefined") {
             return new Ejecta.Canvas();
         },
 
-        env: {"USER_DATA_PATH":"http://usr"}
+        env: {"USER_DATA_PATH":"http://usr"},
+
+        getFileSystemManager: function(){}
     }
 }
 

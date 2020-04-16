@@ -14,7 +14,7 @@ cc.loader.downloader.loadSubpackage = function (name, completeCallback) {
 
 function downloadScript(item, callback, isAsync) {
     var url = '../../../' + item.url;
-    require(url);
+    window.require(url);
     callback(null, item.url);
 }
 

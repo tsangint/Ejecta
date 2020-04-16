@@ -30,7 +30,11 @@ __globalAdapter.init = function init(cb) {
 };
 __globalAdapter.adaptSys = function adaptSys(sys, env) {
     if (!env) {
-        env = __globalAdapter.getSystemInfoSync();
+        env = {
+            language: "zh-cn",
+            system: "iOS",
+            platform: "iOS"
+        };//__globalAdapter.getSystemInfoSync();
     }
     sys.isNative = false;
     sys.isBrowser = false;

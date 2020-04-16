@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var global = {};//GameGlobal;
+var global = GameGlobal;
 
 function inject() {
   _window.document = _document2.default;
@@ -71,7 +71,7 @@ function inject() {
   }
 }
 
-// if (!GameGlobal.__isAdapterInjected) {
-//   GameGlobal.__isAdapterInjected = true;
-//   inject();
-// }
+if (!GameGlobal.__isAdapterInjected) {
+  GameGlobal.__isAdapterInjected = true;
+  inject();
+}

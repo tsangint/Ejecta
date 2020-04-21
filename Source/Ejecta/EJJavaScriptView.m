@@ -107,6 +107,34 @@ void EJBlockFunctionFinalize(JSObjectRef object) {
     [EAGLContext setCurrentContext:glCurrentContext];
     
     [self loadScriptAtPath:EJECTA_BOOT_JS];
+    
+    // 添加
+    JSObjectRef global = JSContextGetGlobalObject(jsGlobalContext);
+
+    JSStringRef readFile  = JSStringCreateWithUTF8CString("readFile");
+    JSObjectRef funcReadFile = JSObjectMakeFunctionWithCallback(jsGlobalContext, NULL, ReadFile);
+    JSObjectSetProperty(jsGlobalContext, global, readFile, funcReadFile,
+        kJSPropertyAttributeReadOnly,
+        NULL
+    );
+}
+
+static JSValueRef ReadFile(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject,
+size_t argc, const JSValueRef argv[], JSValueRef* exception) {
+    NSObject *objArg = JSValueToNSObject(ctx, argv[0]);
+    NSString *filePath = [objArg valueForKey:@"filePath"];
+
+    NSString *appFolder = @"App";
+    NSString *resourcePath = [appFolder stringByAppendingFormat:@"/%@", filePath];
+    NSString *pullPath = [[NSBundle mainBundle] pathForResource:resourcePath ofType:nil];
+
+    NSLog(@"Full path to open: %@", pullPath);
+
+    NSError *error;
+    const char *fileContent = [[NSString stringWithContentsOfFile:pullPath encoding:NSUTF8StringEncoding error:&error]UTF8String];
+
+    JSValueRef ret = JSValueMakeString(ctx, JSStringCreateWithUTF8CString(fileContent));
+    return ret;
 }
 
 - (void)dealloc {
